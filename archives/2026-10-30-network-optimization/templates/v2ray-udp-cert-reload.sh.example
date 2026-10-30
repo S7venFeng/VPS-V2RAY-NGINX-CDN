@@ -1,0 +1,12 @@
+#!/bin/sh
+set -eu
+
+# Replace the documentation address with the actual certificate source paths.
+certificate_file=/var/lib/lego/certificates/198.51.100.10.crt
+private_key_file=/var/lib/lego/certificates/198.51.100.10.key
+
+/bin/systemctl is-active --quiet v2ray-udp.service || exit 0
+if ! /usr/bin/cmp -s "$certificate_file" /run/v2ray-udp/cert.pem || \
+   ! /usr/bin/cmp -s "$private_key_file" /run/v2ray-udp/key.pem; then
+    /bin/systemctl try-restart v2ray-udp.service
+fi

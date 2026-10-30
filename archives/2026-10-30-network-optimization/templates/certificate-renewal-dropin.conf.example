@@ -1,0 +1,4 @@
+# Append this to the EXISTING certificate renewal service after reviewing it.
+# Do not replace that service's existing ExecStart or ExecStartPost commands.
+[Service]
+ExecStartPost=/usr/local/sbin/v2ray-udp-cert-reload

@@ -1,0 +1,30 @@
+[Unit]
+Description=V2Ray company UDP transport with verified TLS
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=v2ray-udp
+Group=v2ray-udp
+PermissionsStartOnly=true
+RuntimeDirectory=v2ray-udp
+RuntimeDirectoryMode=0700
+UMask=0077
+ExecStartPre=/usr/bin/install -m 0600 -o v2ray-udp -g v2ray-udp /var/lib/lego/certificates/198.51.100.10.crt /run/v2ray-udp/cert.pem
+ExecStartPre=/usr/bin/install -m 0600 -o v2ray-udp -g v2ray-udp /var/lib/lego/certificates/198.51.100.10.key /run/v2ray-udp/key.pem
+ExecStart=/usr/local/bin/v2ray -config /etc/v2ray-udp/config.json
+Restart=on-failure
+RestartSec=3
+LimitNOFILE=8192
+MemoryAccounting=true
+MemoryLimit=256M
+NoNewPrivileges=true
+CapabilityBoundingSet=CAP_CHOWN CAP_DAC_OVERRIDE
+PrivateTmp=true
+ProtectSystem=full
+ProtectHome=true
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,39 @@
+{
+  "log": { "loglevel": "warning", "access": "none" },
+  "inbounds": [
+    {
+      "tag": "company-udp-tls",
+      "listen": "198.51.100.10",
+      "port": 34443,
+      "protocol": "vmess",
+      "settings": {
+        "clients": [{ "id": "<VMESS_UUID>", "alterId": 0 }]
+      },
+      "streamSettings": {
+        "network": "kcp",
+        "security": "tls",
+        "kcpSettings": {
+          "mtu": 1350,
+          "tti": 20,
+          "uplinkCapacity": 1,
+          "downlinkCapacity": 1,
+          "congestion": false,
+          "readBufferSize": 1,
+          "writeBufferSize": 1,
+          "seed": "<KCP_SEED>"
+        },
+        "tlsSettings": {
+          "minVersion": "1.3",
+          "maxVersion": "1.3",
+          "alpn": ["http/1.1"],
+          "certificates": [
+            {
+              "certificateFile": "/run/v2ray-udp/cert.pem",
+              "keyFile": "/run/v2ray-udp/key.pem"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

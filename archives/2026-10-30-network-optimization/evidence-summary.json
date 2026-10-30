@@ -1,0 +1,96 @@
+{
+  "date": "2026-10-30",
+  "timezone": "Asia/Shanghai",
+  "scope": "Sanitized technical incident archive; no usable node credentials.",
+  "conclusion": {
+    "underlying_packet_loss_fixed": false,
+    "exact_failing_network_hop_known": false,
+    "observed_issue": "Missing downstream data, repeated TCP retransmission, and congestion window reduction.",
+    "mitigation": "Separate VMess AES-128-GCM over mKCP/UDP with verified TLS 1.3.",
+    "actual_client_download_average_bytes_per_second": [
+      571099,
+      245427
+    ],
+    "measurement_limit": "Short tests on one client and one VPS; not a sustained or universal throughput guarantee."
+  },
+  "controls": {
+    "domestic_https_download_bytes": 1048576,
+    "domestic_https_download_total_seconds": 0.266458,
+    "steady_ssh_bytes_received": 278528,
+    "steady_ssh_timeout_seconds": 17.017,
+    "steady_tcp_proxy_bytes_received": 327680,
+    "steady_tcp_proxy_total_seconds": 15.003601
+  },
+  "tcp_header_observation": {
+    "sack_records": 113,
+    "distinct_holes": 48,
+    "dsack_records": 0,
+    "zero_window_records": 0,
+    "retransmitted_sequence_bytes": 20670,
+    "validated_retransmission_recoveries": 13,
+    "sample_records": 731,
+    "client_ack_records": 383,
+    "minimum_advertised_window_bytes": 113216,
+    "recovery_after_retransmission_ms_examples": [
+      311.9,
+      243.0,
+      253.5,
+      254.7,
+      244.2
+    ],
+    "interpretation_note": "SACK event ratio and overlapping sequence bytes are not link packet-loss-rate measurements."
+  },
+  "udp_echo": {
+    "payload_bytes": 1300,
+    "sending_seconds": 5,
+    "drain_seconds": 3,
+    "offered_mbps_per_flow": 2.08,
+    "flows_simultaneous": 2,
+    "results": [
+      {
+        "port": 443,
+        "client_sent": 1000,
+        "server_application_received": 1000,
+        "client_received": 969,
+        "missing_return_percent": 3.1
+      },
+      {
+        "port": 34443,
+        "client_sent": 1000,
+        "server_application_received": 1000,
+        "client_received": 913,
+        "missing_return_percent": 8.7
+      }
+    ],
+    "interpretation_note": "Requests reached the server application; missing echoes narrow this sample to the return direction, not a particular network device."
+  },
+  "security_checks": {
+    "tls_server_min": "1.3",
+    "tls_server_max": "1.3",
+    "normal_ca_and_ip_identity_validation": true,
+    "wrong_certificate_name_rejected": true,
+    "wrong_certificate_name_evidence": "Core reported an x509 identity validation error, in addition to curl failing.",
+    "dedicated_non_root_service": true,
+    "effective_linux_capabilities": "0000000000000000",
+    "no_new_privileges": true,
+    "unchanged_certificate_hook_does_not_restart": true,
+    "real_future_certificate_rotation_observed": false
+  },
+  "mobile_status": {
+    "mac_client": "verified",
+    "iphone_shadowrocket": "not_tested",
+    "android_v2rayng": "not_tested; KCP seed/finalmask compatibility depends on client/core version"
+  },
+  "excluded_samples": [
+    {
+      "reason": "Temporary server watchdog exited before later requests; not interpreted as a network failure."
+    }
+  ],
+  "redaction": {
+    "actual_addresses_removed": true,
+    "actual_proxy_domain_removed": true,
+    "usernames_and_private_local_paths_removed": true,
+    "uuid_seed_passwords_tokens_private_keys_removed": true,
+    "raw_captures_and_full_client_databases_included": false
+  }
+}

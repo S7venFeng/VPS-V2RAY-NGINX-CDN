@@ -1,0 +1,35 @@
+{
+  "tag": "proxy",
+  "protocol": "vmess",
+  "settings": {
+    "vnext": [
+      {
+        "address": "198.51.100.10",
+        "port": 34443,
+        "users": [
+          { "id": "<VMESS_UUID>", "alterId": 0, "security": "aes-128-gcm" }
+        ]
+      }
+    ]
+  },
+  "streamSettings": {
+    "network": "kcp",
+    "security": "tls",
+    "kcpSettings": {
+      "mtu": 1350,
+      "tti": 50,
+      "uplinkCapacity": 5,
+      "downlinkCapacity": 20,
+      "congestion": false,
+      "readBufferSize": 2,
+      "writeBufferSize": 2,
+      "seed": "<KCP_SEED>"
+    },
+    "tlsSettings": {
+      "allowInsecure": false,
+      "serverName": "198.51.100.10",
+      "alpn": ["h2", "http/1.1"],
+      "fingerprint": "chrome"
+    }
+  }
+}
